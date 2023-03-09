@@ -1,0 +1,41 @@
+CREATE VIEW heute AS
+SELECT a.id, k.Bezeichnung AS kategorie, a.bezeichnung, 
+a.betrag, z.Bezeichnung AS zahlungsart, a.datum 
+FROM ausgabe a 
+INNER JOIN kategorie k ON a.kategorie_id = k.id
+INNER JOIN zahlungsart z ON a.zahlungsart_id = z.id 
+WHERE a.Datum = date('now')
+AND a.nutzer_id = 7;
+
+
+CREATE VIEW woche AS  
+SELECT a.id, k.Bezeichnung AS kategorie, a.bezeichnung, 
+a.betrag, z.Bezeichnung AS zahlungsart, a.datum 
+FROM ausgabe a 
+INNER JOIN kategorie k ON a.kategorie_id = k.ID 
+INNER JOIN zahlungsart z ON a.zahlungsart_id = z.id 
+WHERE DATE(a.datum) >= datetime('now', 'weekday 0', '-6 days')
+and DATE(a.datum) <= datetime('now')
+AND a.nutzer_id = 7;
+
+
+CREATE VIEW monat AS 
+SELECT a.id, k.Bezeichnung AS kategorie, a.bezeichnung, 
+a.betrag, z.Bezeichnung AS zahlungsart, a.datum 
+FROM ausgabe a 
+INNER JOIN kategorie k ON a.kategorie_id = k.ID 
+INNER JOIN zahlungsart z ON a.zahlungsart_id = z.id 
+WHERE DATE(a.datum) >= datetime('now', 'start of month', '-1 month')
+and DATE(a.datum) <= datetime('now')
+AND a.nutzer_id = 7; 
+
+
+CREATE VIEW jahr AS  
+SELECT a.id, k.Bezeichnung AS kategorie, a.bezeichnung, 
+a.betrag, z.Bezeichnung AS zahlungsart, a.datum 
+FROM ausgabe a 
+INNER JOIN kategorie k ON a.kategorie_id = k.ID 
+INNER JOIN zahlungsart z ON a.zahlungsart_id = z.id 
+WHERE DATE(a.datum) >= datetime('now', 'start of year', '-1 year', '+1 day')
+and DATE(a.datum) <= date('now')
+AND a.nutzer_id = 7;
